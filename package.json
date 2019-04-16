@@ -1,11 +1,12 @@
 {
-  "name": "storybook-i18n-addon",
+  "name": "addon-i18n",
   "version": "0.0.1",
   "description": "A library/framework/implementation agnostic i18n solution for storybook.",
   "keywords": [
     "addon",
     "i18n",
-    "storybook"
+    "storybook",
+    "internationalization"
   ],
   "bugs": {
     "url": "https://github.com/CodeByAlex/storybook-i18n-addon/issues"
