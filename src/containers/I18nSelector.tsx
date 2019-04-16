@@ -17,7 +17,6 @@ const IconButtonLabel = styled.div(({ theme }) => ({
 }));
 
 const SelectorWrapper = styled.div`
-  min-width: 180px;
   display: flex;
   justify-content: center;
 `;
@@ -93,10 +92,17 @@ const mapper = ({
 }: Combo): { languageItems: Input[]; countryItems: Input[]; i18nCallback: () => {} } => {
   const story = state.storiesHash[state.storyId];
   const list = story ? api.getParameters(story.id, PARAM_KEY) : [];
-  const languageList = list.languages;
-  const counrtyList = list.countries;
-  const i18nCallback = list.callback;
-  return { languageItems: languageList || [], countryItems: counrtyList || [], i18nCallback };
+  if (list) {
+    const languageList = list.languages;
+    const counrtyList = list.countries;
+    const i18nCall = list.callback;
+    return {
+      languageItems: languageList || [],
+      countryItems: counrtyList || [],
+      i18nCallback: i18nCall || null,
+    };
+  }
+  return { languageItems: [], countryItems: [], i18nCallback: null };
 };
 
 const getDisplayedItems = memoize(10)((list: Input[], selected: string) => {
@@ -131,6 +137,22 @@ export class I18nSelector extends Component<{}, State> {
     }
   };
 
+  triggerCallBack(
+    hasLanguages: boolean,
+    hasCountries: boolean,
+    language: string,
+    country: string,
+    callback
+  ): void {
+    if (hasCountries && hasLanguages) {
+      callback(language, country);
+    } else if (hasLanguages) {
+      callback(language);
+    } else if (hasCountries) {
+      callback(country);
+    }
+  }
+
   render() {
     const { expanded, languageSelected, countrySelected } = this.state;
     return (
@@ -140,9 +162,17 @@ export class I18nSelector extends Component<{}, State> {
           const selectedCountryValue = getSelectedI18nValue(countryItems, countrySelected);
           const selectedLanguageIndex = getSelectedI18nIndex(languageItems, languageSelected);
           const selectedCountryIndex = getSelectedI18nIndex(countryItems, countrySelected);
+          const hasLanguageItems = languageItems && languageItems.length > 0;
+          const hasCountryItems = countryItems && countryItems.length > 0;
 
           if (i18nCallback) {
-            i18nCallback(selectedLanguageValue, selectedCountryValue);
+            this.triggerCallBack(
+              hasLanguageItems,
+              hasCountryItems,
+              selectedLanguageValue,
+              selectedCountryValue,
+              i18nCallback
+            );
           }
 
           const languageLinks = getDisplayedItems(languageItems, selectedLanguageValue, args => {
@@ -153,7 +183,7 @@ export class I18nSelector extends Component<{}, State> {
             this.change(args);
           });
 
-          return countryItems.length || languageItems ? (
+          return (hasCountryItems || hasLanguageItems) && i18nCallback ? (
             <Fragment>
               <WithTooltip
                 placement="top"
@@ -166,10 +196,16 @@ export class I18nSelector extends Component<{}, State> {
                       id="i18n-language-selector"
                       links={languageLinks}
                       indexSelected={selectedLanguageIndex}
-                      title = "Languages"
+                      title="Languages"
                       selectCallback={selectObject => {
                         if (selectObject) {
-                          i18nCallback(selectObject.value, this.state.countrySelected);
+                          this.triggerCallBack(
+                            hasLanguageItems,
+                            hasCountryItems,
+                            selectObject.value,
+                            this.state.countrySelected,
+                            i18nCallback
+                          );
                           this.change({
                             languageSelected: selectObject.value,
                             countrySelected: this.state.countrySelected,
@@ -182,10 +218,16 @@ export class I18nSelector extends Component<{}, State> {
                       id="i18n-country-selector"
                       links={countryLinks}
                       indexSelected={selectedCountryIndex}
-                      title = "Countries"
+                      title="Countries"
                       selectCallback={selectObject => {
                         if (selectObject) {
-                          i18nCallback(this.state.languageSelected, selectObject.value);
+                          this.triggerCallBack(
+                            hasLanguageItems,
+                            hasCountryItems,
+                            this.state.languageSelected,
+                            selectObject.value,
+                            i18nCallback
+                          );
                           this.change({
                             languageSelected: this.state.languageSelected,
                             countrySelected: selectObject.value,

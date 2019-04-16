@@ -30,7 +30,7 @@ const SelectorWrapper = styled.div`
 `;
 
 export default function TooltipSelector({ id, links, indexSelected, title, selectCallback }) {
-  return (
+  return ((links && links.length > 0) && selectCallback) ? (
     <SelectorWrapper>
       <Title>{title}</Title>
       <Select id={id}
@@ -45,7 +45,7 @@ export default function TooltipSelector({ id, links, indexSelected, title, selec
         ))}
       </Select>
     </SelectorWrapper>
-  );
+  ) : null;
 }
 
 TooltipSelector.propTypes = {
