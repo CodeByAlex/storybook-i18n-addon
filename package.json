@@ -1,21 +1,18 @@
 {
-  "name": "@storybook/addon-i18n",
-  "version": "5.1.0-alpha.27",
-  "description": "A storybook addon to show different i18n options",
+  "name": "storybook-i18n-addon",
+  "version": "0.0.1",
+  "description": "A library/framework/implementation agnostic i18n solution for storybook.",
   "keywords": [
     "addon",
     "i18n",
-    "react",
     "storybook"
   ],
-  "homepage": "https://github.com/storybooks/storybook/tree/master/addons/i18n",
   "bugs": {
-    "url": "https://github.com/storybooks/storybook/issues"
+    "url": "https://github.com/CodeByAlex/storybook-i18n-addon/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/storybooks/storybook.git",
-    "directory": "addons/i18n"
+    "url": "https://github.com/CodeByAlex/storybook-i18n-addon.git"
   },
   "license": "MIT",
   "author": "jbaxleyiii",
