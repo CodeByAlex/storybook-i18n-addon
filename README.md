@@ -1,5 +1,6 @@
 # Storybook I18n Addon
 A framework/library/implementation agnostic I18n addon for storybook
+![](documentation/screenshot.png)
 
 ## Configuration
 
