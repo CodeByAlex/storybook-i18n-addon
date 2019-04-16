@@ -166,6 +166,7 @@ export class I18nSelector extends Component<{}, State> {
                       id="i18n-language-selector"
                       links={languageLinks}
                       indexSelected={selectedLanguageIndex}
+                      title = "Languages"
                       selectCallback={selectObject => {
                         if (selectObject) {
                           i18nCallback(selectObject.value, this.state.countrySelected);
@@ -181,6 +182,7 @@ export class I18nSelector extends Component<{}, State> {
                       id="i18n-country-selector"
                       links={countryLinks}
                       indexSelected={selectedCountryIndex}
+                      title = "Countries"
                       selectCallback={selectObject => {
                         if (selectObject) {
                           i18nCallback(this.state.languageSelected, selectObject.value);
