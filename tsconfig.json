@@ -1,13 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src",
-    "types": ["webpack-env"]
+    "outDir": "dist",
+    "module": "commonjs",
+    "jsx": "react",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "src/__tests__/**/*"
-  ]
+  "include": ["src"],
+  "exclude": ["src/register.ts"]
 }

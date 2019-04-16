@@ -1,1 +1,1 @@
-require('./dist/register');
+export * from './dist/register';
