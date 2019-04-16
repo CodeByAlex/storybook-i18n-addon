@@ -9,7 +9,7 @@ Then create a file called `addons.js` in your storybook config.
 Add following content to it:
 
 ```js
-import '@storybook/addon-i18n/register';
+import 'addon-i18n/register';
 ```
 
 ## Usage
